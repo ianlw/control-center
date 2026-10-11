@@ -1,0 +1,389 @@
+/* =====================================================================
+ * Control Center estilo macOS Tahoe (26/27) para Hyprland + HyprGlass
+ *
+ * La ventana es transparente: HyprGlass aplica el liquid glass real
+ * sobre el namespace de capa "control-center".
+ * Estos fondos rgba son el FALLBACK para cuando HyprGlass no está
+ * activo (o como tinte bajo el cristal). mask_threshold recomendado: 0.05
+ * ===================================================================== */
+
+/* --- ventana: totalmente transparente, el cristal lo pone HyprGlass --- */
+window {
+    background: transparent;
+}
+
+.cc-catcher {
+    background: transparent;
+}
+
+.cc-root {
+    background: transparent;
+    padding: 14px;
+}
+
+/* --- tarjetas (pills) estilo Tahoe: flotantes, sin fondo global ---
+ * Alfa bajo a propósito: con HyprGlass (mask_mode alpha) el cristal
+ * se aplica SOLO donde hay botón; los huecos muestran el fondo tal cual,
+ * como en macOS (Image 2). Sin HyprGlass este rgba es el fallback. */
+.pill {
+    background: rgba(30, 32, 38, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 26px;
+    padding: 12px 14px;
+    /* SIN sombra exterior: sus píxeles con alfa>umbral hacían que HyprGlass
+     * (mask alpha) fusionara todas las tarjetas en una sola losa.
+     * Solo highlight interior, que queda dentro de cada botón. */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: background-color 160ms ease-in-out,
+                border-color 160ms ease-in-out;
+}
+
+.cc-light .pill {
+    background: rgba(255, 255, 255, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+/* tarjeta activa: tinte azul como en macOS */
+.pill.on {
+    background: rgba(10, 132, 255, 0.42);
+    border-color: rgba(255, 255, 255, 0.40);
+}
+
+.cc-light .pill.on {
+    background: rgba(10, 132, 255, 0.36);
+}
+
+.pill:hover {
+    border-color: rgba(255, 255, 255, 0.50);
+}
+
+/* --- textos: sombra para que se lean sobre cualquier fondo --- */
+.card-title, .row-title {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+.cc-light .card-title, .cc-light .row-title {
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+.card-sub, .row-sub {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.60);
+}
+
+.cc-light .card-sub, .cc-light .row-sub {
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.60);
+}
+
+.page-title {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+.cc-light .page-title {
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+/* --- botones: quitar fondo por defecto --- */
+.pill button, .round, .netrow, .mini, .media, .back {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+button.textarea {
+    padding: 0;
+}
+
+/* círculo del icono: blanco translúcido, glyph oscuro (como macOS) */
+.icon {
+    background: rgba(255, 255, 255, 0.85);
+    color: #3a3a3c;
+    border-radius: 9999px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.icon image {
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.pill.on .icon {
+    background: #ffffff;
+    color: #0a84ff;
+}
+
+/* --- botones redondos --- */
+.round {
+    background: rgba(30, 32, 38, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+    border-radius: 9999px;
+    min-width: 58px;
+    min-height: 58px;
+    padding: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: background-color 160ms ease-in-out,
+                border-color 160ms ease-in-out;
+}
+
+.cc-light .round {
+    background: rgba(255, 255, 255, 0.32);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.65);
+}
+
+.round:hover {
+    border-color: rgba(255, 255, 255, 0.50);
+    background: rgba(60, 63, 72, 0.38);
+}
+
+.round:active {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.round.active {
+    background: #ffffff;
+    color: #0a84ff;
+    border-color: #ffffff;
+}
+
+.round image, .icon image, .media image {
+    transition: opacity 120ms ease-in-out;
+}
+
+/* feedback de pulsación en tarjetas */
+.pill button:active {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 18px;
+}
+
+.textarea:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+}
+
+.icon:hover {
+    background: #ffffff;
+}
+
+/* --- Now Playing --- */
+.np-title {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+.cc-light .np-title {
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+.media {
+    color: rgba(255, 255, 255, 0.9);
+    min-width: 34px;
+    min-height: 30px;
+    border-radius: 9999px;
+    transition: background-color 140ms ease-in-out;
+}
+
+.media:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.media:active {
+    background: rgba(255, 255, 255, 0.32);
+}
+
+.cc-light .media {
+    color: #ffffff;
+}
+
+.media.play {
+    color: #ffffff;
+}
+
+.cc-light .media.play {
+    color: #ffffff;
+}
+
+/* --- sliders anchos --- */
+.slider-card scale trough {
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 9999px;
+    min-height: 18px;
+}
+
+.slider-card scale highlight {
+    background: #ffffff;
+    border-radius: 9999px;
+}
+
+.slider-card scale slider {
+    background: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    min-width: 20px;
+    min-height: 20px;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mini {
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 9999px;
+    min-width: 34px;
+    min-height: 34px;
+}
+
+.cc-light .mini {
+    color: #1d1d1f;
+}
+
+/* --- banner superior ("X recently") --- */
+.banner {
+    background: rgba(30, 32, 38, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+    border-radius: 9999px;
+    padding: 6px 16px;
+    font-size: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.60);
+}
+
+.cc-light .banner {
+    background: rgba(30, 32, 38, 0.35);
+    color: #ffffff;
+}
+
+/* --- subpáginas --- */
+.page-head {
+    padding: 8px 10px;
+    border-radius: 9999px;
+}
+
+list, list row, scrolledwindow {
+    background: transparent;
+    border: none;
+}
+
+.action-btn {
+    background: rgba(30, 32, 38, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+    border-radius: 9999px;
+    padding: 10px 16px;
+    font-weight: bold;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.60);
+    transition: background-color 160ms ease-in-out;
+}
+
+.cc-light .action-btn {
+    background: rgba(30, 32, 38, 0.32);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.action-btn:hover {
+    background: rgba(10, 132, 255, 0.45);
+    color: #ffffff;
+}
+.action-btn:active {
+    background: rgba(10, 132, 255, 0.60);
+}
+.detail-row {
+    background: rgba(30, 32, 38, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 20px;
+    padding: 10px 14px;
+}
+
+.cc-light .detail-row {
+    background: rgba(30, 32, 38, 0.30);
+}
+
+.back {
+    color: #ffffff;
+    border-radius: 9999px;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+.cc-light .back {
+    color: #0a84ff;
+}
+
+.netrow {
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 8px 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.60);
+    transition: background-color 140ms ease-in-out;
+}
+
+.netrow:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.netrow:active {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.cc-light .netrow {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.60);
+}
+
+.cc-light .netrow:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+scrolledwindow undershoot {
+    background: transparent;
+}
+
+scrollbar slider {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 9999px;
+}
+
+/* switch estilo iOS/macOS */
+switch {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 9999px;
+    min-width: 48px;
+    min-height: 28px;
+}
+
+switch:checked {
+    background: #30d158;
+}
+
+switch slider {
+    background: #ffffff;
+    border-radius: 9999px;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+entry {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 8px 10px;
+}
